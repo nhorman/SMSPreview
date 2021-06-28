@@ -37,10 +37,9 @@ class SMSPreviewWidget : AppWidgetProvider() {
         if (intent.action != "android.provider.Telephony.SMS_RECEIVED") {
                 return
         }
-        val contentResolver = context.contentResolver
         val smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
         for (message in smsMessages) {
-            Log.i("SMSPreviewReceiver", message.displayMessageBody + "From Widget")
+            Log.i("SMSPreviewWidget", message.displayMessageBody + "From Widget")
         }
     }
 }
