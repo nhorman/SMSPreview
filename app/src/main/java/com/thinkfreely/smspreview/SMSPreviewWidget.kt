@@ -3,6 +3,9 @@ package com.thinkfreely.smspreview
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.content.Intent
+import android.provider.Telephony
+import android.util.Log
 import android.widget.RemoteViews
 
 /**
@@ -26,6 +29,19 @@ class SMSPreviewWidget : AppWidgetProvider() {
 
     override fun onDisabled(context: Context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+        // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
+        if (intent.action != "android.provider.Telephony.SMS_RECEIVED") {
+                return
+        }
+        val contentResolver = context.contentResolver
+        val smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
+        for (message in smsMessages) {
+            Log.i("SMSPreviewReceiver", message.displayMessageBody + "From Widget")
+        }
     }
 }
 

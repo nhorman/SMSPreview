@@ -26,14 +26,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/s_m_s_preview_widget_info" />
         </receiver>
-        <receiver
-            android:name=".SMSPreviewReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter android:priority="2147483647">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name=".MainActivity"
