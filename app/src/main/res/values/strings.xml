@@ -3,4 +3,9 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
+    <string name="Next">Next</string>
+    <string name="clear">Clear</string>
+    <string name="next">Next</string>
+    <string name="textview">TextView</string>
+    <string name="button">Button</string>
 </resources>

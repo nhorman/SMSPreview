@@ -36,7 +36,6 @@ class SMSPreviewWidget : AppWidgetProvider() {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
         if (intent.action != "android.provider.Telephony.SMS_RECEIVED") {
                 return super.onReceive(context, intent)
-                return
         }
         val smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
         val views = RemoteViews(context.packageName, R.layout.s_m_s_preview_widget)
