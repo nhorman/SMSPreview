@@ -15,6 +15,10 @@ import android.widget.RemoteViews
  * Implementation of App Widget functionality.
  */
 class SMSPreviewWidget : AppWidgetProvider() {
+    companion object {
+        val messageList: MutableList<String> = mutableListOf<String>()
+        var messageDisplayed: Boolean = false
+    }
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -39,15 +43,31 @@ class SMSPreviewWidget : AppWidgetProvider() {
         when(intent.action) {
             "NEXT_MESSAGE" -> {
                 Log.i("SMSPreviewWidget", "GOT NEXT MESSAGE")
+                if (!messageList.isEmpty()) {
+                    val nextmessage = messageList.elementAt(0)
+                    messageList.removeAt(0)
+                    views.setTextViewText(R.id.appwidget_text, nextmessage)
+                } else {
+                    views.setTextViewText(R.id.appwidget_text, "")
+                    messageDisplayed = false
+                }
             }
             "CLEAR_MESSAGES" -> {
                 Log.i("SMSPreviewWidget", "GOT CLEAR MESSAGES")
+                messageList.clear()
+                messageDisplayed = false
+                views.setTextViewText(R.id.appwidget_text, "")
             }
             "android.provider.Telephony.SMS_RECEIVED" -> {
                 val smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
                 for (message in smsMessages) {
-                    views.setTextViewText(R.id.appwidget_text, message.displayMessageBody)
-                    Log.i("SMSPreviewWidget", message.displayMessageBody + "From Widget")
+                    if (messageDisplayed == false) {
+                        views.setTextViewText(R.id.appwidget_text, message.displayMessageBody)
+                        messageDisplayed = true
+                    } else {
+                        messageList.add(message.displayMessageBody.toString())
+                    }
+                    Log.i("SMSPreviewWidget", messageList.size.toString())
                 }
             }
             else -> {
