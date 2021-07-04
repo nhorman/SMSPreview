@@ -1,10 +1,12 @@
 package com.thinkfreely.smspreview
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.provider.Telephony
 import android.util.Log
 import android.widget.RemoteViews
@@ -33,6 +35,11 @@ class SMSPreviewWidget : AppWidgetProvider() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
+        if (intent.action != null) {
+            Log.i("SMSPreviewWidget", intent.action.toString())
+        } else {
+            Log.i("SMSPreviewWidget", "NO ACTION INTENT")
+        }
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
         if (intent.action != "android.provider.Telephony.SMS_RECEIVED") {
                 return super.onReceive(context, intent)
