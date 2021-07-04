@@ -23,6 +23,7 @@
                 android:layout_height="150dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:background="#68FFFFFF"
                 android:gravity="center|center_horizontal|center_vertical" />
 
             <LinearLayout
