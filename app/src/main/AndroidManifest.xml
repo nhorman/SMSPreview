@@ -21,6 +21,8 @@
             <intent-filter android:priority="2147483647" >
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="NEXT_MESSAGE" />
+                <action android:name="CLEAR_MESSAGES" />
             </intent-filter>
 
             <meta-data

@@ -67,6 +67,16 @@ internal fun updateAppWidget(
     val views = RemoteViews(context.packageName, R.layout.s_m_s_preview_widget)
     views.setTextViewText(R.id.appwidget_text, widgetText)
 
+    val intent = Intent(context, SMSPreviewWidget::class.java)
+    intent.setAction("NEXT_MESSAGE")
+    val pendingintent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    views.setOnClickPendingIntent(R.id.NextButton, pendingintent)
+
+    val intent2 = Intent(context, SMSPreviewWidget::class.java)
+    intent2.setAction("CLEAR_MESSAGES")
+    val pendingintent2 = PendingIntent.getBroadcast(context, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
+    views.setOnClickPendingIntent(R.id.clearButton, pendingintent2)
+
     // Instruct the widget manager to update the widget
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
