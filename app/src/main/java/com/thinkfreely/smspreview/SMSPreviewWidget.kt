@@ -35,20 +35,25 @@ class SMSPreviewWidget : AppWidgetProvider() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action != null) {
-            Log.i("SMSPreviewWidget", intent.action.toString())
-        } else {
-            Log.i("SMSPreviewWidget", "NO ACTION INTENT")
-        }
-        // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-        if (intent.action != "android.provider.Telephony.SMS_RECEIVED") {
-                return super.onReceive(context, intent)
-        }
-        val smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
         val views = RemoteViews(context.packageName, R.layout.s_m_s_preview_widget)
-        for (message in smsMessages) {
-            views.setTextViewText(R.id.appwidget_text, message.displayMessageBody)
-            Log.i("SMSPreviewWidget", message.displayMessageBody + "From Widget")
+        when(intent.action) {
+            "NEXT_MESSAGE" -> {
+                Log.i("SMSPreviewWidget", "GOT NEXT MESSAGE")
+            }
+            "CLEAR_MESSAGES" -> {
+                Log.i("SMSPreviewWidget", "GOT CLEAR MESSAGES")
+            }
+            "android.provider.Telephony.SMS_RECEIVED" -> {
+                val smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
+                for (message in smsMessages) {
+                    views.setTextViewText(R.id.appwidget_text, message.displayMessageBody)
+                    Log.i("SMSPreviewWidget", message.displayMessageBody + "From Widget")
+                }
+            }
+            else -> {
+                return super.onReceive(context, intent)
+            }
+
         }
         val widgetManager = AppWidgetManager.getInstance(context)
         val currWidget = ComponentName(context, SMSPreviewWidget::class.java)
