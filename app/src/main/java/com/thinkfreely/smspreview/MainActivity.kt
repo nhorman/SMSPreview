@@ -17,5 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ActivityCompat.requestPermissions(this@MainActivity, arrayOf(android.Manifest.permission.RECEIVE_SMS),1)
+        finish()
     }
 }

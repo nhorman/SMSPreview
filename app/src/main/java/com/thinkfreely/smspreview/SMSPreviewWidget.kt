@@ -61,11 +61,13 @@ class SMSPreviewWidget : AppWidgetProvider() {
             "android.provider.Telephony.SMS_RECEIVED" -> {
                 val smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
                 for (message in smsMessages) {
+                    val fmsg = "FROM: " + message.displayOriginatingAddress.toString() + "\n" + message.displayMessageBody.toString()
                     if (messageDisplayed == false) {
-                        views.setTextViewText(R.id.appwidget_text, message.displayMessageBody)
+
+                        views.setTextViewText(R.id.appwidget_text, fmsg)
                         messageDisplayed = true
                     } else {
-                        messageList.add(message.displayMessageBody.toString())
+                        messageList.add(fmsg)
                     }
                     Log.i("SMSPreviewWidget", messageList.size.toString())
                 }
