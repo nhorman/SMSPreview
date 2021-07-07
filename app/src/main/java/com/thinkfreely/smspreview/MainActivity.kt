@@ -7,6 +7,8 @@ import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.RemoteViews
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -17,6 +19,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ActivityCompat.requestPermissions(this@MainActivity, arrayOf(android.Manifest.permission.RECEIVE_SMS),1)
-        finish()
+        //val picker = findViewById<com.skydoves.colorpickerview.ColorPickerView>(R.id.colorPickerView) as com.skydoves.colorpickerview.ColorPickerView
+        //picker.setColorListener(object : com.skydoves.colorpickerview.listeners.ColorListener {
+         //   override fun onColorSelected(color: Int, fromUser: Boolean) {
+           //     Log.i("MainActivity", "SELECTNG COLOR")
+             //   val views = RemoteViews(packageName, R.layout.s_m_s_preview_widget)
+            //}
+        //})
+        val donebtn = findViewById(R.id.donebutton) as Button
+        donebtn.setOnClickListener {
+            finish()
+        }
     }
 }

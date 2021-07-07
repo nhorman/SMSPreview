@@ -8,4 +8,5 @@
     <string name="next">Next</string>
     <string name="textview">TextView</string>
     <string name="button">Button</string>
+    <string name="preview_background">Preview Background</string>
 </resources>
