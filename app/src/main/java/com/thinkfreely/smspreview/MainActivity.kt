@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.RemoteViews
+import android.widget.ToggleButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -28,6 +30,13 @@ class MainActivity : AppCompatActivity() {
         //})
         val donebtn = findViewById(R.id.donebutton) as Button
         donebtn.setOnClickListener {
+            var duration: Int
+            val toggle = findViewById(R.id.toggleToast) as ToggleButton
+            if (toggle.isEnabled == true) {
+                val durationinput = findViewById(R.id.ToastDuration) as EditText
+                duration = durationinput.text.toString().toInt()
+                SMSPreviewWidget.toastduration = duration
+            }
             finish()
         }
     }

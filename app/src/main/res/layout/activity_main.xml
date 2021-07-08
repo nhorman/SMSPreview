@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
-        android:text="Done"
+        android:text="@string/done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -22,7 +22,7 @@
         android:layout_width="268dp"
         android:layout_height="44dp"
         android:gravity="center"
-        android:text="SMS Preview Settings"
+        android:text="@string/sms_preview_settings"
         app:layout_constraintBottom_toTopOf="@+id/toggleToast"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -35,21 +35,51 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="312dp"
-        android:text="ToggleButton"
+        android:text="@string/togglebutton"
+        android:textColor="#455A64"
         app:layout_constraintBottom_toTopOf="@+id/donebutton"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/ToastLabel"
         android:layout_width="203dp"
         android:layout_height="48dp"
         android:gravity="center"
-        android:text="Display toast"
+        android:text="@string/display_toast"
         app:layout_constraintBottom_toTopOf="@+id/donebutton"
         app:layout_constraintEnd_toStartOf="@+id/toggleToast"
         app:layout_constraintHorizontal_bias="0.605"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingslabel"
         app:layout_constraintVertical_bias="0.254" />
+
+    <TextView
+        android:id="@+id/Durationlabel"
+        android:layout_width="203dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="@string/toast_duration"
+        app:layout_constraintBottom_toTopOf="@+id/donebutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.221"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ToastLabel"
+        app:layout_constraintVertical_bias="0.114" />
+
+    <EditText
+        android:id="@+id/ToastDuration"
+        android:layout_width="91dp"
+        android:layout_height="61dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/donebutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.329"
+        app:layout_constraintStart_toEndOf="@+id/Durationlabel"
+        app:layout_constraintTop_toBottomOf="@+id/toggleToast"
+        app:layout_constraintVertical_bias="0.111"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

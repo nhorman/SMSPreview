@@ -7,17 +7,30 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Handler
 import android.provider.Telephony
 import android.util.Log
 import android.widget.RemoteViews
+import android.widget.Toast
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
+import java.util.*
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.concurrent.schedule
+
 
 /**
  * Implementation of App Widget functionality.
  */
 class SMSPreviewWidget : AppWidgetProvider() {
     companion object {
+        val toastList: MutableList<String> = mutableListOf<String>()
         val messageList: MutableList<String> = mutableListOf<String>()
         var messageDisplayed: Boolean = false
+        var toastduration: Int = 0
+        var widgetEnabled: Boolean = false
+        val runneron: AtomicBoolean = AtomicBoolean(false)
+
     }
     override fun onUpdate(
         context: Context,
@@ -31,13 +44,27 @@ class SMSPreviewWidget : AppWidgetProvider() {
     }
 
     override fun onEnabled(context: Context) {
-        // Enter relevant functionality for when the first widget is created
+        widgetEnabled = true
     }
 
     override fun onDisabled(context: Context) {
-        // Enter relevant functionality for when the last widget is disabled
+        widgetEnabled = false
     }
 
+    suspend fun makeToasts(context: Context) {
+        withContext(Dispatchers.Main) {
+            if (runneron.getAndSet(true)  == false) {
+                while (toastList.isEmpty() == false) {
+                    val fmsg = toastList.elementAt(0)
+                    toastList.removeAt(0)
+                    for (i in 1..toastduration) {
+                        Toast.makeText(context, fmsg, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                runneron.set(false)
+            }
+        }
+    }
     override fun onReceive(context: Context, intent: Intent) {
         val views = RemoteViews(context.packageName, R.layout.s_m_s_preview_widget)
         when(intent.action) {
@@ -62,6 +89,15 @@ class SMSPreviewWidget : AppWidgetProvider() {
                 val smsMessages = Telephony.Sms.Intents.getMessagesFromIntent(intent)
                 for (message in smsMessages) {
                     val fmsg = "FROM: " + message.displayOriginatingAddress.toString() + "\n" + message.displayMessageBody.toString()
+                    if (toastduration != 0) {
+                        toastList.add(fmsg)
+                        CoroutineScope(IO).launch {
+                            makeToasts(context)
+                        }
+                    }
+                    if(widgetEnabled == false) {
+                        break
+                    }
                     if (messageDisplayed == false) {
 
                         views.setTextViewText(R.id.appwidget_text, fmsg)
@@ -80,7 +116,6 @@ class SMSPreviewWidget : AppWidgetProvider() {
         val widgetManager = AppWidgetManager.getInstance(context)
         val currWidget = ComponentName(context, SMSPreviewWidget::class.java)
         widgetManager?.updateAppWidget(currWidget, views)
-
     }
 }
 

@@ -9,4 +9,9 @@
     <string name="textview">TextView</string>
     <string name="button">Button</string>
     <string name="preview_background">Preview Background</string>
+    <string name="done">Done</string>
+    <string name="sms_preview_settings">SMS Preview Settings</string>
+    <string name="togglebutton">ToggleButton</string>
+    <string name="display_toast">Display toast</string>
+    <string name="toast_duration">Toast Duration</string>
 </resources>
